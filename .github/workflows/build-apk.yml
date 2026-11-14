@@ -1,6 +1,7 @@
-# Builds the APK through the central reusable workflow.
-# Open the run's "Summary" to see the commit, APK size, SHA-256 and signing fingerprint;
-# download the APK from the run page -> Artifacts -> android-apk.
+# Caller workflow for an app repository. Copy this file unchanged to .github/workflows/build-apk.yml
+# (the name matters: gh_ci.sh push-run dispatches build-apk.yml). It builds the APK through the central reusable workflow.
+# The run's Summary and its "APK ready" annotation show the commit, package name, size, SHA-256 and signing fingerprint;
+# the APK itself is in the run page -> Artifacts -> android-apk.
 name: Build APK
 
 on:
@@ -20,7 +21,9 @@ jobs:
   android:
     uses: moamenessamseja-web/Flutter-Android-Build/.github/workflows/flutter-android-build.yml@main
     with:
-      flutter_version: "3.47.9"      # pinned on purpose; change only deliberately
+      flutter_version: "3.47.9"            # pinned on purpose; change only deliberately
       build_mode: release
-      scaffold_args: "--org com.moamen"   # applicationId = com.moamen.<pubspec name>; cannot change after the first install
-    secrets: inherit
+      scaffold_args: "--org com.moamen"    # applicationId = com.moamen.<pubspec name>; cannot change after the first install
+    # No secrets are passed: the workflow uses none. When release signing is added, pass them by name:
+    #   secrets:
+    #     ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}

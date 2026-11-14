@@ -27,3 +27,9 @@ jobs:
     # No secrets are passed: the workflow uses none. When release signing is added, pass them by name:
     #   secrets:
     #     ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+
+  # Enforces the .agent/ method on Pull Requests only (a fresh repository has no .agent/ state yet, so pushes to main are not checked).
+  # It is a separate job: a failing method check never blocks the APK build.
+  method:
+    if: ${{ github.event_name == 'pull_request' }}
+    uses: moamenessamseja-web/Flutter-Android-Build/.github/workflows/method-check.yml@main

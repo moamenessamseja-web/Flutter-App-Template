@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   android:
-    uses: moamenessamseja-web/Flutter-Android-Build/.github/workflows/flutter-android-build.yml@main
+    uses: moamenessamseja-web/Flutter-Android-Build/.github/workflows/flutter-android-build.yml@v1.0.0
     with:
       flutter_version: "3.47.9"            # pinned on purpose; change only deliberately
       build_mode: release
@@ -32,4 +32,6 @@ jobs:
   # It is a separate job: a failing method check never blocks the APK build.
   method:
     if: ${{ github.event_name == 'pull_request' }}
-    uses: moamenessamseja-web/Flutter-Android-Build/.github/workflows/method-check.yml@main
+    uses: moamenessamseja-web/Flutter-Android-Build/.github/workflows/method-check.yml@v1.0.0
+    with:
+      gateway_ref: v1.0.0   # the audit script is fetched from the same tag as the workflow

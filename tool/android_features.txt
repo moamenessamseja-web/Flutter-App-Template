@@ -1,0 +1,4 @@
+# Native Android features injected by tool/ci_android.sh, one per line.
+# Available:
+#   notifications   permissions, boot/scheduled receivers, desugaring, R8 keep rules for flutter_local_notifications
+# Leave empty if the app needs none.

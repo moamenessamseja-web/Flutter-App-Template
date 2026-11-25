@@ -23,7 +23,8 @@ jobs:
     with:
       flutter_version: "3.47.9"            # pinned on purpose; change only deliberately
       build_mode: release
-      scaffold_args: "--org com.moamen"    # applicationId = com.moamen.<pubspec name>; cannot change after the first install
+      scaffold_args: "--org com.moamen"    # applicationId = <org>.<pubspec name>; set by tool/rename_app.sh; cannot change after the first install
+      pre_build_command: "bash tool/ci_android.sh"   # launcher label + optional native features (tool/android_label.txt, tool/android_features.txt)
     # No secrets are passed: the workflow uses none. When release signing is added, pass them by name:
     #   secrets:
     #     ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}

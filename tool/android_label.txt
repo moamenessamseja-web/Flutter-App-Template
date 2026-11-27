@@ -1,0 +1,2 @@
+# The launcher name of the app (first non-comment line). Any language, e.g. عَدّادي
+App Template

@@ -1,0 +1,17 @@
+# Dispatcher for the gateway's reusable lockfile workflow (D1b).
+# Manual only: Actions -> Lockfile -> Run workflow -> choose a FEATURE branch (the reusable workflow refuses main).
+# github-actions[bot] commits pubspec.lock to that branch; GITHUB_TOKEN pushes do not trigger other workflows (no CI loop).
+# After dispatch: re-read HEAD (the bot lock commit) before opening the PR, and set EXPECT_SHA to it when waiting for CI.
+name: Lockfile
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  lockfile:
+    uses: moamenessamseja-web/Flutter-Android-Build/.github/workflows/lockfile.yml@v1.1.1
+    with:
+      flutter_version: "3.47.9"   # same pin as build-apk.yml

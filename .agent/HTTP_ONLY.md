@@ -98,7 +98,7 @@ GET /repos/moamenessamseja-web/<REPO>/check-runs/<JOB_ID>/annotations
 # artifact (APK zip) download link:
 GET /repos/moamenessamseja-web/<REPO>/actions/runs/<RUN_ID>/artifacts
     → artifacts[0].archive_download_url  (fetch with the Bearer header, it redirects to a pre-signed URL;
-      do not forward the Authorization header to the redirect target. Not verified by the author of this note.)
+      verified: it answers 302 with a pre-signed blob URL (host `*.blob.core.windows.net`). Not verified: whether forwarding the Authorization header to that URL breaks the download; if your tool does it automatically and the download fails, disable that.)
 ```
 
 ## 8. New app from the template (HTTP only, no git)

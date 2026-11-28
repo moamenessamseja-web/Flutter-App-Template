@@ -11,8 +11,7 @@ last code commit `5520f0b`). Read its `lib/` before inventing your own.
 | `shared_preferences` | `^2.3.0` | ran on the owner's phone with addadi. Known trap: `shared_preferences_android` 2.5.0 gave a black screen on this phone in manager-assistant-ready; fix there: `dependency_overrides: shared_preferences_android: 2.4.28`. 2026-11-27: an app built from this template with `shared_preferences` 2.5.6 / `shared_preferences_android` 2.5.5 (resolved by CI) started and rendered on the same phone; its API was not called, so only startup is covered |
 | `share_plus` | `^11.0.0` | compiled in CI (addadi); API `SharePlus.instance.share(ShareParams(files: [XFile(path)]))`; never run on the phone |
 
-Pin exact versions in `pubspec.yaml`. There is no committed `pubspec.lock` (it cannot be produced without Flutter), so read the
-`Resolved dependencies` annotation of a green build (`gh_ci.sh result <branch>`) and pin what it shows.
+Commit `pubspec.lock` if it exists (the pub cache key uses its hash). If it does not exist yet: pin exact versions from the `Resolved dependencies` annotation of a green build; CI lockfile generation is roadmap item D1. Read it with `gh_ci.sh result <branch>`.
 
 ## 2. Storage
 Keep `KeyValueStorage` (lib/data/storage.dart). The device implementation:

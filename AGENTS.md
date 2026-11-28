@@ -15,7 +15,7 @@ You cannot run the gate scripts in that mode; HTTP_ONLY.md defines the API equiv
 
 ## Facts to respect in every target repository
 - `.github/workflows/build-apk.yml` calls the gateway's reusable workflow. Keep the Flutter version pinned.
-- Commit `pubspec.lock`; the pub cache key uses its hash.
+- Commit `pubspec.lock` if it exists (the pub cache key uses its hash). If it does not exist yet: pin exact versions from the `Resolved dependencies` annotation of a green build; CI lockfile generation is roadmap item D1.
 - The applicationId is fixed by the pubspec `name` (+ `--org`). Decide it BEFORE the first APK is installed on the owner's phone; it cannot change afterwards without uninstalling.
 - Work on `agent/<task>`, open a PR with the agent's own PAT (a PR opened with `GITHUB_TOKEN` does not start CI). Merge to `main` only after the owner device-tested.
 
@@ -24,6 +24,6 @@ You cannot run the gate scripts in that mode; HTTP_ONLY.md defines the API equiv
 - `android/` is NOT committed: the central workflow generates it on every build (`flutter create --platforms=android --project-name <pubspec name> --org <org>`), then `tool/ci_android.sh` applies `tool/android_label.txt` and the features listed in `tool/android_features.txt` (available: `notifications`). Native changes go through that script (dry-run it on a mock manifest first) or by committing `android/` once.
 - Layers: `lib/domain` (pure Dart, no Flutter imports, unit-tested without a device), `lib/data` (storage behind an interface), `lib/ui` (strings table Arabic/English, widgets). Strings are getters over one table: write `Text(S.hello)`, never `const Text(S.hello)`.
 - Tests: `python3 <gateway>/.skills/engineer-in-charge/scripts/pure_dart_tests.py .` runs the pure ones in seconds; widget/plugin tests run only in CI.
-- Flutter is pinned in `.github/workflows/build-apk.yml` (3.47.9). `pubspec.lock` cannot be created without Flutter: pin exact versions in `pubspec.yaml` using the `Resolved dependencies` annotation of a green build (`gh_ci.sh result <branch>`).
+- Flutter is pinned in `.github/workflows/build-apk.yml` (3.47.9). Commit `pubspec.lock` if it exists (the pub cache key uses its hash). If it does not exist yet: pin exact versions from the `Resolved dependencies` annotation of a green build; CI lockfile generation is roadmap item D1. (`gh_ci.sh result <branch>`).
 - Proven plugin versions, storage/notification/export/language recipes and the Flutter APIs to avoid: `docs/RECIPES.md`. The reference app is `moamenessamseja-web/addadi` (tag `phase2-paused-2026-11-16`).
 - `.agent/HTTP_ONLY.md` is a copy of the gateway file of the same name. After `init_agent.py` creates `.agent/README.md`, add `HTTP_ONLY.md` to its file index (otherwise `agent_audit.py` warns).
